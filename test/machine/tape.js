@@ -38,6 +38,11 @@ describe("The tape", function(){
 
 	});
 
+	it("should update minimumIndexWritten and maxIndexWritten", function(){
+		tape.minimumIndexWritten.should.be.exactly(-1);
+		tape.maximumIndexWritten.should.be.exactly(1);
+	});
+
 	it("should reset ok", function(){
 		tape.reset();
 
@@ -45,6 +50,9 @@ describe("The tape", function(){
 		tape.read(1).should.be.exactly(0);
 		tape.read(-1).should.be.exactly(0);
 		tape.read(-80).should.be.exactly(0);
+
+		tape.minimumIndexWritten.should.be.exactly(0);
+		tape.maximumIndexWritten.should.be.exactly(0);
 
 	});
 
