@@ -14,11 +14,18 @@ describe("The transition function", function(){
 
 	it("should insert new rules", function(){
 		tf.addRule(Q0, 0, Q1, 1, LEFT);
+		tf.addRule(Q1, 0, Q0, 0, RIGHT);
 
 		should.deepEqual(tf.transition(Q0, 0), {
 			state: Q1,
 			symbol: 1,
 			direction: LEFT
+		});
+
+		should.deepEqual(tf.transition(Q1, 0), {
+			state: Q0,
+			symbol: 0,
+			direction: RIGHT
 		});
 
 
