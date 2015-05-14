@@ -1,10 +1,21 @@
+export const 
+	LEFT = -1,
+	RIGHT = 1;
+
+
+export class RuleNotFoundException {
+	constructor(){
+
+	}
+}
+
 export default class TransitionFunction {
 	constructor(){
 		this.transitionTable = {};
 	}
 
 	addRule(state, read_symbol, new_state, written_symbol, direction) {
-		if (!this.transitionTable[state]){
+		if (!(state in this.transitionTable)){
 			this.transitionTable[state] = {};
 		}
 
@@ -15,8 +26,17 @@ export default class TransitionFunction {
 		};
 	}
 
-	transition(state, read_symbol){
-		return this.transitionTable[state][read_symbol];
+	transition(state, readSymbol){
+		let transitionTable = this.transitionTable;
+		if (state in transitionTable && transitionTable[state]){
+			let stateRules = this.transitionTable[state];
+			if (readSymbol in stateRules){
+				return this.transitionTable[state][readSymbol];
+			}
+		}
+
+		throw new RuleNotFoundException();
+
 	}
 	
 }
