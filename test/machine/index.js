@@ -50,11 +50,64 @@ describe("A turing machine", function(){
 
 		machine.addRule(Q0, 0, Q1, 0, RIGHT);	// we do not define any rule for the next step
 
+		var steps_done = 0;
+		machine.on("step", function(){ steps_done++; });
+
 		machine.once("error", function(){
+			steps_done.should.be.exactly(1);
 			done();
 		});
 
 		machine.run(10);
+	});
+
+	it("emits rules events", function(done){
+		machine.reset();
+		machine.removeAllListeners("step");
+		machine.once("ruleAdded", function(){
+			done();
+		});
+
+		machine.addRule(Q0, 0, Q1, 1, LEFT);
+	});
+
+	it("writes data properly", function(done){
+		machine.reset();
+		machine.removeAllListeners("steps");
+
+		machine.addRule(Q0, 0, Q1, 1, RIGHT);
+		machine.addRule(Q1, 0, Q2, 1, RIGHT);
+		machine.addRule(Q2, 0, Q1, 1, LEFT);
+		machine.addRule(Q1, 1, HALT, 0, LEFT);
+
+		var steps_done = 0;
+		
+		machine.on("step", function(data){
+			switch(steps_done){
+				case 0:
+					data.tape.read(0).should.be.exactly(1);
+					break;
+				case 1:
+					data.tape.read(1).should.be.exactly(1);
+					break;
+				case 2:
+					data.tape.read(2).should.be.exactly(1);
+					break;
+				case 3:
+					data.tape.read(1).should.be.exactly(0);
+					break;
+			}
+
+			steps_done++;
+		});
+
+		machine.once("halt", function(){
+			steps_done.should.be.exactly(4);
+			done();
+		});
+
+		machine.run(10);
+
 	});
 	
 });
