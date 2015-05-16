@@ -36,5 +36,11 @@ describe("The transition function", function(){
 		tf.transition.bind(tf, Q1, 10).should.throw();
 	});
 
+	it("can get reset", function(){
+		tf.reset();
+		tf.transition.bind(tf, Q0, 0).should.throw();
+		tf.transition.bind(tf, Q1, 0).should.throw();
+	});
+
 
 });

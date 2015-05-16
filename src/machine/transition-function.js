@@ -3,14 +3,19 @@ export const
 	RIGHT = 1;
 
 
-export class RuleNotFoundException {
+export class RuleNotFoundException extends Error {
 	constructor(){
-
+		super();
+		this.error = "Rule was not found";
 	}
 }
 
 export default class TransitionFunction {
 	constructor(){
+		this.init();
+	}
+
+	init(){
 		this.transitionTable = {};
 	}
 
@@ -37,6 +42,10 @@ export default class TransitionFunction {
 
 		throw new RuleNotFoundException();
 
+	}
+
+	reset(){
+		this.init();
 	}
 	
 }
