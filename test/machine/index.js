@@ -25,7 +25,7 @@ describe("A turing machine", function(){
 		machine.run(10);
 	});
 
-	it("sends step events", function(done){
+	it("emits step events", function(done){
 		machine.reset();
 		machine.addRule(Q0, 0, Q1, 1, RIGHT);
 		machine.addRule(Q1, 0, Q2, 0, LEFT);
@@ -42,6 +42,19 @@ describe("A turing machine", function(){
 
 		machine.run(10);
 
+	});
+
+	it("emits error events", function(done){
+		machine.reset();
+		machine.removeAllListeners("step");
+
+		machine.addRule(Q0, 0, Q1, 0, RIGHT);	// we do not define any rule for the next step
+
+		machine.once("error", function(){
+			done();
+		});
+
+		machine.run(10);
 	});
 	
 });

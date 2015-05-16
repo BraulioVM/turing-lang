@@ -42,10 +42,11 @@ export default class TuringMachine extends EventEmitter {
 					this.moveHead(direction);
 					this.emit("step", { tape: this.tape, headPosition: this.headPosition, state });
 				} catch(e) {
+					this.stop();
 					this.emit("error", e);
 				}
 			} else {
-				this.running = false;
+				this.stop();
 				this.emit("halt", this.tape);
 			}
 		}
