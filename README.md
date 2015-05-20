@@ -9,7 +9,7 @@ turing-lang
 
 
 ### Development
-To contribute to this project, clone the repo and run:
+To contribute to the project, clone the repo and run:
 ````
 $> npm install 
 $> grunt test

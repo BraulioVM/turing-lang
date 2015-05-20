@@ -4,9 +4,10 @@ export const
 
 
 export class RuleNotFoundException extends Error {
-	constructor(){
+	constructor(condition){
 		super();
 		this.error = "Rule was not found";
+		this.condition = condition;
 	}
 }
 
@@ -40,7 +41,7 @@ export default class TransitionFunction {
 			}
 		}
 
-		throw new RuleNotFoundException();
+		throw new RuleNotFoundException([state, readSymbol]);
 
 	}
 

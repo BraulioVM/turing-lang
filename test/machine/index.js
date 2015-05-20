@@ -83,18 +83,19 @@ describe("A turing machine", function(){
 		var steps_done = 0;
 		
 		machine.on("step", function(data){
+			var tape = machine.tape;
 			switch(steps_done){
 				case 0:
-					data.tape.read(0).should.be.exactly(1);
+					tape.read(0).should.be.exactly(1);
 					break;
 				case 1:
-					data.tape.read(1).should.be.exactly(1);
+					tape.read(1).should.be.exactly(1);
 					break;
 				case 2:
-					data.tape.read(2).should.be.exactly(1);
+					tape.read(2).should.be.exactly(1);
 					break;
 				case 3:
-					data.tape.read(1).should.be.exactly(0);
+					tape.read(1).should.be.exactly(0);
 					break;
 			}
 

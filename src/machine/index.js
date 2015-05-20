@@ -28,7 +28,7 @@ export default class TuringMachine extends EventEmitter {
 
 	addRule(state, readSymbol, newState, writtenSymbol, direction){
 		this.transitionFunction.addRule(state, readSymbol, newState, writtenSymbol, direction);
-		this.emit("ruleAdded", this.transitionFunction);
+		this.emit("ruleAdded", [state, readSymbol, newState, writtenSymbol, direction]);
 	}
 
 	step() {
@@ -39,8 +39,9 @@ export default class TuringMachine extends EventEmitter {
 					let { state, symbol, direction } = this.transition(readSymbol);
 					this.currentState = state;
 					this.write(symbol);
+					this.emit("step", { writtenSymbol: symbol, headPosition: this.headPosition, state });
+					
 					this.moveHead(direction);
-					this.emit("step", { tape: this.tape, headPosition: this.headPosition, state });
 				} catch(e) {
 					this.stop();
 					this.emit("error", e);
