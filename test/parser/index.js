@@ -2,6 +2,7 @@ var parse = require("../../lib/parser");
 var should = require("should");
 
 var parseRule = parse.parseRule;
+var parse = parse.default;
 var RIGHT = 1;
 var LEFT = -1;
 
@@ -105,6 +106,46 @@ describe("Parser module", function(){
 			}).should.throw();
 		});
 
+
+	});
+
+	describe("The code parser", function(){
+
+		it("shouldn't care about empty lines", function(done){
+			var code = "Q0 0 => Q1 0 RIGHT \n\
+				\n\
+				Q1 0 => HALT 0 RIGHT";
+
+			var machine = parse(code);
+			var steps = 0;
+
+			machine.on("step", function(){steps++;});
+			machine.on("halt", function(){
+				steps.should.be.exactly(2);
+				done();
+			});
+
+			machine.run(10);
+
+		});
+
+		it("shouldn't care about comments", function(done){
+			var code = "Q0 0 => Q1 0 RIGHT \n\
+				# What's up\n\
+				Q1 0 => HALT 0 RIGHT";
+
+			var machine = parse(code);
+			var steps = 0;
+
+			machine.on("step", function(){steps++;});
+			machine.on("halt", function(){
+				steps.should.be.exactly(2);
+				done();
+			});
+
+			machine.run(10);
+
+		});
 
 	});
 	

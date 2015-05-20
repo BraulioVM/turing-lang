@@ -18,32 +18,51 @@ export function parseRule(line){
 
 export default function parse(code){
 	let machine = new Machine("Q0", "HALT");
-	
-	let lines = code.split("\n");
-	lines = lines.filter(notComment);
-	lines = lines.filter(notEmpty);
+	let rules = getRulesFromCode(code);
 
-	lines.forEach((line) => {
-		let rule = parseRule(line);
-		machine.addRule(...rule);
+	rules.forEach((rule) => {
+		let machine_rule = parseRule(rule);
+		machine.addRule(...machine_rule);
 	});
 
 	return machine;
 }
+
+function getRulesFromCode(code){
+	code = code.split("\t").join(" "); // Replace tabs with spaces
+	code = stripComments(code);
+
+	let lines = code.split("\n");
+	return lines.filter(notEmpty);
+}
+
+function stripComments(code){
+	let lines = code.split("\n");
+	let result_lines = [];
+
+	lines.forEach(function(line){
+		result_lines.push(line.split("#")[0]);
+	});
+
+	return result_lines.join("\n");
+}
+
 
 function notComment(line){
 	return line[0] !== "#";
 }
 
 function notEmpty(line){
-	return line.length !== 0;
+	var parts = line.split(" ");
+	var notEmptyParts = parts.filter(function(part){ return part.length !== 0; });
+	return notEmptyParts.length > 0;
 }
 
 function extractRuleParts(rule){
 	let ruleParts = rule.split("=>");
 
 	if (ruleParts.length !== 2){
-		throw new SyntaxError("Instruction error", line);
+		throw new SyntaxError("Instruction error: " + rule, rule);
 	}
 
 	return ruleParts;
