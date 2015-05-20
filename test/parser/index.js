@@ -144,7 +144,22 @@ describe("Parser module", function(){
 			});
 
 			machine.run(10);
+		});
 
+		it("should handle inline comments", function(done){
+			var code = "Q0 0 => Q1 0 RIGHT # Yo\n\
+				Q1 0 => HALT 0 RIGHT";
+
+			var machine = parse(code);
+			var steps = 0;
+
+			machine.on("step", function(){steps++;});
+			machine.on("halt", function(){
+				steps.should.be.exactly(2);
+				done();
+			});
+
+			machine.run(10);
 		});
 
 	});

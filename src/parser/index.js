@@ -47,11 +47,6 @@ function stripComments(code){
 	return result_lines.join("\n");
 }
 
-
-function notComment(line){
-	return line[0] !== "#";
-}
-
 function notEmpty(line){
 	var parts = line.split(" ");
 	var notEmptyParts = parts.filter(function(part){ return part.length !== 0; });
