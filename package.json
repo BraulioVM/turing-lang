@@ -1,13 +1,13 @@
 {
   "name": "turing-lang",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "A turing machine interpreter",
   "main": "index.js",
   "repository": "https://github.com/BraulioVM/turing-lang",
   "scripts": {
     "test": "grunt"
   },
-  "main": "dist/turing-lang.js",
+  "main": "lib/turing-lang.js",
   "author": "Braulio Valdivielso",
   "license": "ISC",
   "devDependencies": {
