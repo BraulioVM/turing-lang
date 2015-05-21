@@ -3,9 +3,11 @@
   "version": "0.0.0",
   "description": "A turing machine interpreter",
   "main": "index.js",
+  "repository": "https://github.com/BraulioVM/turing-lang",
   "scripts": {
     "test": "grunt"
   },
+  "main": "dist/turing-lang.js",
   "author": "Braulio Valdivielso",
   "license": "ISC",
   "devDependencies": {
