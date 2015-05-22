@@ -529,6 +529,13 @@ var Tape = (function () {
 		value: function accesedTape() {
 			return this.readBulk(this.minimumIndexWritten, this.maximumIndexWritten);
 		}
+	}, {
+		key: "setData",
+		value: function setData(input) {
+			for (var k in input) {
+				this.data[k] = input[k];
+			}
+		}
 	}]);
 
 	return Tape;

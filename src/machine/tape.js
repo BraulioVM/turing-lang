@@ -40,6 +40,12 @@ export default class Tape {
 	accesedTape(){
 		return this.readBulk(this.minimumIndexWritten, this.maximumIndexWritten);
 	}
+
+	setData(input){
+		for (let k in input) {
+			this.data[k] = input[k];
+		}
+	}
 }
 
 function range(i, j){

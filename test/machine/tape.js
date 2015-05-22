@@ -56,6 +56,18 @@ describe("The tape", function(){
 
 	});
 
+	it("should admit custom input", function(){
+		tape.reset();
+
+		var input = {};
+		input[-3] = 2;
+		input[-2] = 6;
+		
+		tape.setData(input);
+		should.deepEqual(tape.readBulk(-3, -1), input);
+
+	});
+
 
 
 });
